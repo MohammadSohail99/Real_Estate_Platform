@@ -62,10 +62,10 @@
     <p>Mediator ID: ${appointment.mediatorId}</p>
     <p>Buyer ID: ${appointment.buyerId}</p>
     <p>Property ID: ${appointment.propertyId}</p>
-    <p>Date and Time: ${appointment.dateTime}</p>
+    <p>Date and Time: ${appointment.date}</p>
     <p>Status: ${appointment.status}</p>
 
-    <form action="buy">
+    <form action="/viewBookings">
         <input type="hidden" name="bid" value="${appointment.buyerId}">
         <input type="hidden" name="id" value="${appointment.propertyId}">
         <input type="hidden" name="address" value="${address}">
@@ -73,7 +73,7 @@
         <input type="hidden" name="maxPrice" value="${maxPrice}">
         <input type="hidden" name="minArea" value="${minArea}">
         <input type="hidden" name="maxArea" value="${maxArea}">
-        <input type="submit" value="Buy Property">
+        <input type="submit" value="view All Bookings">
     </form>
 </div>
 </body>

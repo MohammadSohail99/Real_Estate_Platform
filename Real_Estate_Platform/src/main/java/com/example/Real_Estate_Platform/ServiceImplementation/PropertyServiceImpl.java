@@ -9,7 +9,7 @@ import java.util.List;
 public interface PropertyServiceImpl {
     String saveProperty(PropertyModel propertyModel, int sid);
 
-    List<PropertyModel> getAllProperties();
+    List<PropertyModel> getAllProperties(int sid);
 
     Property getPropertyById(int id);
 
@@ -32,4 +32,8 @@ public interface PropertyServiceImpl {
     List<Property> searchPropertyByArea(double minArea, double maxArea);
 
     List<Property> searchPropertyByPrice(double minPrice, double maxPrice);
+
+    List<Property> getProperties();
+
+    List<PropertyModel> getAllProperty();
 }

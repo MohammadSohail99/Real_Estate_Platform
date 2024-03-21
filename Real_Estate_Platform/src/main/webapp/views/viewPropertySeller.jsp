@@ -66,8 +66,8 @@
                 <td>${property.id}</td>
                 <td>${property.title}</td>
                 <td>${property.address}</td>
-                <td>${property.price}</td>
-                <td>${property.area}</td>
+                <td>${property.price} per sq ft</td>
+                <td>${property.area} total sq ft</td>
                 <td>${property.status}</td>
                 <td>
                     <c:choose>
@@ -92,6 +92,9 @@
 </c:if>
 <form action="/viewAllSeller">
     <input class="action-button" type="submit" value="Back to All Sellers">
+</form>
+<form action="/viewAppointments">
+    <input class="action-button" type="submit" value="view All Bookings">
 </form>
 </body>
 </html>

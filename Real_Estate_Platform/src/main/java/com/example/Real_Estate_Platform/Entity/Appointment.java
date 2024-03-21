@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 @Entity
 @Setter
 @Getter
@@ -27,8 +27,19 @@ public class Appointment {
 
     private int propertyId;
 
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
     private String status="Pending";
 
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", mediatorId=" + mediatorId +
+                ", buyerId=" + buyerId +
+                ", propertyId=" + propertyId +
+                ", date=" + date +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

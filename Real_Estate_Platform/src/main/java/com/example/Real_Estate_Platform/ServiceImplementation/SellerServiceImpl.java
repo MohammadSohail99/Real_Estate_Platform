@@ -14,4 +14,8 @@ public interface SellerServiceImpl {
     List<Seller> getAllSellers();
 
     List<Property> getProperties(int sellerId);
+
+    List<Seller> getSeller();
+
+    Seller getSellerById(int sid);
 }

@@ -60,9 +60,9 @@
     <c:if test="${property != null}">
         <h2>Property Information:</h2>
         <p>Location: ${property.address}</p>
-        <p>Price: ${property.price}</p>
+        <p>Price: ${property.price} per square feet</p>
         <p>Title: ${property.title}</p>
-        <p>Area: ${property.area}</p>
+        <p>Area: ${property.area} total square feet</p>
          <p>Status: ${property.status}</p>
     </c:if>
 

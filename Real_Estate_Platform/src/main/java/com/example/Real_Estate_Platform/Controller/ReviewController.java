@@ -7,6 +7,9 @@ import com.example.Real_Estate_Platform.Repository.PropertyRepo;
 import com.example.Real_Estate_Platform.Service.BuyerService;
 import com.example.Real_Estate_Platform.Service.PropertyService;
 import com.example.Real_Estate_Platform.Service.ReviewService;
+import com.example.Real_Estate_Platform.ServiceImplementation.BuyerServiceImpl;
+import com.example.Real_Estate_Platform.ServiceImplementation.PropertyServiceImpl;
+import com.example.Real_Estate_Platform.ServiceImplementation.ReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +21,11 @@ import java.util.Optional;
 @Controller
 public class ReviewController {
     @Autowired
-    private ReviewService reviewService;
+    private ReviewServiceImpl reviewService;
     @Autowired
-    private PropertyService propertyService;
+    private PropertyServiceImpl propertyService;
     @Autowired
-    private BuyerService buyerService;
+    private BuyerServiceImpl buyerService;
 
 
     @RequestMapping("/addReview")

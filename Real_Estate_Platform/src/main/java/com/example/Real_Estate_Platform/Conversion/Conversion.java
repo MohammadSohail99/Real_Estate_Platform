@@ -101,7 +101,6 @@ public class Conversion {
         sellerModel.setRole("ROLE_SELLER");
         return sellerModel;
     }
-
     public Seller sellerModel_entity(SellerModel sellerModel) {
         Seller seller=new Seller();
         seller.setSid(sellerModel.getSid());
@@ -122,7 +121,7 @@ public class Conversion {
         model.setBuyerId(appointment.getBuyerId());
         model.setPropertyId(appointment.getPropertyId());
         model.setMediatorId(appointment.getMediatorId());
-        model.setDateTime(appointment.getDateTime());
+        model.setDate(appointment.getDate());
         model.setStatus(appointment.getStatus());
         return model;
     }
@@ -133,7 +132,7 @@ public class Conversion {
         appointment.setBuyerId(model.getBuyerId());
         appointment.setPropertyId(model.getPropertyId());
         appointment.setMediatorId(model.getMediatorId());
-        appointment.setDateTime(model.getDateTime());
+        appointment.setDate(model.getDate());
         appointment.setStatus(model.getStatus());
         return appointment;
     }

@@ -12,4 +12,5 @@ import java.util.List;
 
 @Repository
 public interface PropertyRepo extends JpaRepository<Property,Integer> {
+    List<Property> findBySeller(Seller seller);
 }

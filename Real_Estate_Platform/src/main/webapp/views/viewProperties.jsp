@@ -75,32 +75,32 @@
               <th>Status</td>
         </tr>
 
-        <c:if test="${!empty propertyList}">
-            <c:forEach items="${propertyList}" var="property">
-                <tr>
-                    <td><c:out value="${property.id}"/></td>
-                    <td><c:out value="${property.title}"/></td>
-                    <td><c:out value="${property.address}"/></td>
-                    <td><c:out value="${property.price}"/></td>
-                    <td><c:out value="${property.area}"/></td>
-                    <td><c:out value="${property.sold ? 'Yes' : 'No'}"/></td>
-                    <td><c:out value="${property.status}"/></td>
-                     <td>
-                            <form action="scheduleAppointment">
-                                <input type="hidden" name="propertyId" value="${property.id}">
-                                <input type="hidden" name="buyerId" value="${bid}">
-                                <input type="hidden" name="address" value="${property.address}">
-                                <input type="hidden" name="minPrice" value="${minPrice}">
-                                <input type="hidden" name="maxPrice" value="${maxPrice}">
-                                <input type="hidden" name="minArea" value="${minArea}">
-                                <input type="hidden" name="maxArea" value="${maxArea}">
-                                <input type="submit" value="Book Appointment">
-                            </form>
-                        </td>
-                </tr>
+        <c:forEach items="${propertyList}" var="property">
+            <tr>
+                <td><c:out value="${property.id}"/></td>
+                <td><c:out value="${property.title}"/></td>
+                <td><c:out value="${property.address}"/></td>
+                <td><c:out value="${property.price}"  /> per square feet</td>
+                <td><c:out value="${property.area}" /> total sq ft</td>
+                <td><c:out value="${property.sold ? 'Yes' : 'No'}"/></td>
+                <td><c:out value="${property.status}"/></td>
+                <td>
+                    <c:if test="${!property.sold}">
+                        <form action="scheduleAppointment">
+                            <input type="hidden" name="propertyId" value="${property.id}">
+                            <input type="hidden" name="buyerId" value="${bid}">
+                            <input type="hidden" name="address" value="${property.address}">
+                            <input type="hidden" name="minPrice" value="${minPrice}">
+                            <input type="hidden" name="maxPrice" value="${maxPrice}">
+                            <input type="hidden" name="minArea" value="${minArea}">
+                            <input type="hidden" name="maxArea" value="${maxArea}">
+                            <input type="submit" value="Book Appointment">
+                        </form>
+                    </c:if>
+                </td>
+            </tr>
+        </c:forEach>
 
-            </c:forEach>
-        </c:if>
     </table>
 </body>
 </html>

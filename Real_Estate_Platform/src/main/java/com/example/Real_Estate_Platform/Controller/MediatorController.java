@@ -1,13 +1,16 @@
 package com.example.Real_Estate_Platform.Controller;
 
+import com.example.Real_Estate_Platform.Entity.Appointment;
 import com.example.Real_Estate_Platform.Entity.Buyer;
 import com.example.Real_Estate_Platform.Entity.Property;
 import com.example.Real_Estate_Platform.Entity.Seller;
+import com.example.Real_Estate_Platform.Model.AppointmentModel;
 import com.example.Real_Estate_Platform.Model.MediatorModel;
 import com.example.Real_Estate_Platform.Service.BuyerService;
 import com.example.Real_Estate_Platform.Service.MediatorService;
 import com.example.Real_Estate_Platform.Service.PropertyService;
 import com.example.Real_Estate_Platform.Service.SellerService;
+import com.example.Real_Estate_Platform.ServiceImplementation.*;
 import com.example.Real_Estate_Platform.validation.ValidationMediator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +23,22 @@ import java.util.List;
 @Controller
 public class MediatorController {
     @Autowired
-    private MediatorService mediatorService;
+    private MediatorServiceImpl mediatorService;
     @Autowired
-    private SellerService sellerService;
+    private SellerServiceImpl sellerService;
     @Autowired
-    private BuyerService buyerService;
+    private BuyerServiceImpl buyerService;
     @Autowired
-    private PropertyService propertyService;
+    private PropertyServiceImpl propertyService;
+    @Autowired
+    private AppointmentServiceImpl appointmentService;
     @Autowired
     ValidationMediator validationMediator;
     @RequestMapping("/")
     public String start(){
         return "start";
     }
-        @RequestMapping("/registers")
+        @RequestMapping("/registerMediator")
         public String showRegisterForm(Model model) {
             MediatorModel mediatorModel=new MediatorModel();
             model.addAttribute("mediator",mediatorModel);
@@ -69,7 +74,7 @@ public class MediatorController {
             }
         }
     @RequestMapping("/viewAllSeller")
-    public String getAllSellers( Model model) {
+    public String getAllSellers(Model model) {
         List<Seller> sellers= sellerService.getAllSellers();
         model.addAttribute("sellers", sellers);
         return "viewAllSellers";
@@ -90,7 +95,24 @@ public class MediatorController {
         model.addAttribute("properties", properties);
         return "viewPropertySeller";
     }
+    @RequestMapping("viewAppointments")
+    public String viewAllAppointments(Model model){
+        List<Appointment> appointmentList=appointmentService.getAllAppointments();
+        model.addAttribute("appointments",appointmentList);
+        System.out.println(appointmentList);
+        return "viewAllAppointments";
+    }
+    @RequestMapping("/confirmAppointment")
+    public String confirmAppointment(@RequestParam("appointmentId") int appointmentId) {
+        appointmentService.confirmAppointment(appointmentId);
+        return "redirect:/viewAllAppointments";
+    }
 
+    @RequestMapping("/rejectAppointment")
+    public String rejectAppointment(@RequestParam("appointmentId") int appointmentId) {
+        appointmentService.rejectAppointment(appointmentId);
+        return "redirect:/viewAllAppointments";
+    }
 
 }
 

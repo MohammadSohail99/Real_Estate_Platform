@@ -53,11 +53,25 @@
 </head>
 <body>
 <div class="container">
+    <p>${errorMessage}</p>
+    <form action="/scheduleAppointment">
+        <input type="hidden" name="propertyId" value="${propertyId}">
+         <input type="hidden" name="mediatorId" value="${mediatorId}">
+                <input type="hidden" name="buyerId" value="${buyerId}">
+                <input type="hidden" name="address" value="${address}">
+                <input type="hidden" name="minPrice" value="${minPrice}">
+                <input type="hidden" name="maxPrice" value="${maxPrice}">
+                <input type="hidden" name="minArea" value="${minArea}">
+                <input type="hidden" name="maxArea" value="${maxArea}">
+        <input class="action-button" type="submit" value="Back">
+    </form>
+</div>
+<div class="container">
     <h1>Schedule Appointment</h1>
     <form action="/scheduleAppointmentBuyer" method="post">
-        <input type="hidden" name="id" value="${propertyId}">
-        <input type="hidden" name="bid" value="${buyerId}">
-        <input type="hidden" name="address" value="${property.address}">
+        <input type="hidden" name="propertyId" value="${propertyId}">
+        <input type="hidden" name="buyerId" value="${buyerId}">
+        <input type="hidden" name="address" value="${address}">
         <input type="hidden" name="minPrice" value="${minPrice}">
         <input type="hidden" name="maxPrice" value="${maxPrice}">
         <input type="hidden" name="minArea" value="${minArea}">
@@ -65,7 +79,7 @@
         Mediator ID: <input type="text" name="mediatorId"><br>
         Buyer ID: <input type="text" name="bid" value="${buyerId}"><br>
         Property ID: <input type="text" name="id" value="${propertyId}"><br>
-        Date and Time: <input type="datetime-local" name="dateTime"><br>
+        Date: <input type="date" name="date"><br>
         <input type="submit" value="Schedule Appointment">
     </form>
 </div>

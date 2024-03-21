@@ -81,8 +81,8 @@
                     <td><c:out value="${property.id}"/></td>
                     <td><c:out value="${property.title}"/></td>
                     <td><c:out value="${property.address}"/></td>
-                    <td><c:out value="${property.price}"/></td>
-                    <td><c:out value="${property.area}"/></td>
+                    <td><c:out value="${property.price}" per sq ft/></td>
+                    <td><c:out value="${property.area}" total sq ft/></td>
                     <td><c:out value="${property.sold ? 'Yes' : 'No'}"/></td>
                     <td><c:out value="${property.status}"/></td>
                 </tr>

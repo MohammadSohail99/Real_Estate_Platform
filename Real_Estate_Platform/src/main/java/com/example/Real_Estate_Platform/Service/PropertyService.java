@@ -42,15 +42,18 @@ public class PropertyService implements PropertyServiceImpl {
         }
     }
     @Override
-    public List<PropertyModel> getAllProperties(){
-        List<Property> propertyList=propertyRepo.findAll();
-        List<PropertyModel> propertyModelList=new ArrayList<>();
+    public List<PropertyModel> getAllProperties(int sid) {
+        Seller seller = sellerRepo.findById(sid).get();
+        List<Property> propertyList = propertyRepo.findBySeller(seller);
+        System.out.println(propertyList);
+        List<PropertyModel> propertyModelList = new ArrayList<>();
 
         propertyList.forEach(property -> {
             propertyModelList.add(conversion.entity_propertyModel(property));
         });
         return propertyModelList;
     }
+
     @Override
     public Property getPropertyById(int id) {
         Property property = propertyRepo.findAll().stream()
@@ -136,5 +139,24 @@ public class PropertyService implements PropertyServiceImpl {
                 .filter(i->i.getPrice()>=minPrice && i.getPrice()<=maxPrice)
                 .collect(Collectors.toList());
         return propertyList;
+    }
+
+    @Override
+    public List<Property> getProperties() {
+        List<Property> propertyList=propertyRepo.findAll().stream()
+                .filter(property -> property.getPrice()>=1000 && property.getArea()>50)
+                .collect(Collectors.toList());
+        return propertyList;
+    }
+
+    @Override
+    public List<PropertyModel> getAllProperty() {
+        List<Property> propertyList = propertyRepo.findAll();
+        List<PropertyModel> propertyModelList1 = new ArrayList<>();
+
+        propertyList.forEach(property -> {
+            propertyModelList1.add(conversion.entity_propertyModel(property));
+        });
+        return propertyModelList1;
     }
 }

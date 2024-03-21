@@ -6,6 +6,8 @@ import com.example.Real_Estate_Platform.Entity.Seller;
 import com.example.Real_Estate_Platform.Model.PropertyModel;
 import com.example.Real_Estate_Platform.Service.PropertyService;
 import com.example.Real_Estate_Platform.Service.SellerService;
+import com.example.Real_Estate_Platform.ServiceImplementation.PropertyServiceImpl;
+import com.example.Real_Estate_Platform.ServiceImplementation.SellerServiceImpl;
 import com.example.Real_Estate_Platform.validation.ValidationProperty;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,9 @@ import java.util.List;
 @Controller
 public class PropertyController {
     @Autowired
-    private PropertyService propertyService;
+    private PropertyServiceImpl propertyService;
     @Autowired
-    private SellerService sellerService;
+    private SellerServiceImpl sellerService;
     @Autowired
     private ValidationProperty validationProperty;
     @RequestMapping("/main")
@@ -53,14 +55,14 @@ public class PropertyController {
             return "addPropertyForm";
         }
         model.addAttribute(propertyService.saveProperty(propertyModel,sid));
-        List<PropertyModel> propertyList=propertyService.getAllProperties();
+        List<PropertyModel> propertyList=propertyService.getAllProperties(sid);
         model.addAttribute("propertyList",propertyList);
         model.addAttribute("sid",sid);
         return "viewAllProperties";
     }
     @RequestMapping("/viewProperties")
     public String viewProperties(Model model){
-        model.addAttribute("propertyList",propertyService.getAllProperties());
+        model.addAttribute("propertyList",propertyService.getAllProperty());
         return "viewAllProperties";
     }
     @RequestMapping("/viewProperty")
@@ -103,5 +105,4 @@ public class PropertyController {
         propertyService.deletePropertyById(id);
         return "redirect:/viewProperties";
     }
-
 }

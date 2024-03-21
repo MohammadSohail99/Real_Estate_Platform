@@ -1,9 +1,14 @@
 package com.example.Real_Estate_Platform.Controller;
+import com.example.Real_Estate_Platform.Entity.Seller;
 import com.example.Real_Estate_Platform.Model.SellerModel;
 import com.example.Real_Estate_Platform.Service.BuyerService;
 import com.example.Real_Estate_Platform.Service.MediatorService;
 import com.example.Real_Estate_Platform.Service.PropertyService;
 import com.example.Real_Estate_Platform.Service.SellerService;
+import com.example.Real_Estate_Platform.ServiceImplementation.BuyerServiceImpl;
+import com.example.Real_Estate_Platform.ServiceImplementation.MediatorServiceImpl;
+import com.example.Real_Estate_Platform.ServiceImplementation.PropertyServiceImpl;
+import com.example.Real_Estate_Platform.ServiceImplementation.SellerServiceImpl;
 import com.example.Real_Estate_Platform.validation.ValidationSeller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +17,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 public class SellerController {
     @Autowired
-    private SellerService sellerService;
+    private SellerServiceImpl sellerService;
     @Autowired
-    private PropertyService propertyService;
+    private PropertyServiceImpl propertyService;
     @Autowired
-    private BuyerService buyerService;
+    private BuyerServiceImpl buyerService;
     @Autowired
-    private MediatorService mediatorService;
+    private MediatorServiceImpl mediatorService;
     @Autowired
     ValidationSeller validationSeller;
     @RequestMapping("/regSeller")
@@ -58,4 +65,5 @@ public class SellerController {
             return "notaccept";
         }
     }
+
 }

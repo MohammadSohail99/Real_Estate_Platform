@@ -58,7 +58,7 @@
 
             <h2>Mediator Panel</h2>
             <p>Register Mediator</p>
-            <a href="registers">Register</a>
+            <a href="registerMediator">Register</a>
             <p>Mediator Login</p>
             <a href="/loginM">Login</a>
         </div>

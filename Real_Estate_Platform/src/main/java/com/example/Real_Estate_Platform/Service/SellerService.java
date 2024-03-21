@@ -63,4 +63,9 @@ public class SellerService implements SellerServiceImpl {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public List<Seller> getSeller() {
+        return  sellerRepo.findAll();
+    }
 }

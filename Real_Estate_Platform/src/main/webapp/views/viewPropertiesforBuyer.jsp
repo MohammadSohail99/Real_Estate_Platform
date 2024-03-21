@@ -92,15 +92,15 @@
         <input type="hidden" name="bid" value="${bid}"/>
         <input type="submit" value="Search"/>
     </form>
-    <form action="/search1">
+    <form action="/searchBasedLocation">
             <input type="hidden" name="bid" value="${bid}"/>
             <input type="submit" value="Search Location Based"/>
     </form>
-    <form action="/search2">
+    <form action="/searchBasedArea">
         <input type="hidden" name="bid" value="${bid}"/>
         <input type="submit" value="Search Area Based"/>
     </form>
-    <form action="/search3">
+    <form action="/searchBasedPrice">
          <input type="hidden" name="bid" value="${bid}"/>
          <input type="submit" value="Search Price Based"/>
     </form>

@@ -16,8 +16,8 @@
     <c:if test="${property != null}">
             <p><strong>Title:</strong> ${property.title}</p>
             <p><strong>Location:</strong> ${property.address}</p>
-            <p><strong>price:</strong> ${property.price}</p>
-            <p><strong>area:</strong> ${property.area}</p>
+            <p><strong>price:</strong> ${property.price} per sq ft</p>
+            <p><strong>area:</strong> ${property.area} total sq ft</p>
             <p><strong>Status:</strong> ${property.status}</p>
         </c:if>
 
