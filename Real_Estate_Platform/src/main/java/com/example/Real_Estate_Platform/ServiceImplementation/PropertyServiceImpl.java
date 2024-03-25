@@ -17,7 +17,7 @@ public interface PropertyServiceImpl {
 
     void deletePropertyById(int id);
 
-    double calculateTotalPriceForArea(double area, double price, int id, int bid);
+    double calculateTotalPriceForArea(int id, String buyer_name);
 
     List<Property> searchProperties(String address, double minPrice, double maxPrice, double minArea, double maxArea);
 

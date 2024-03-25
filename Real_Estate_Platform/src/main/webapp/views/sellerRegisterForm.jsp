@@ -89,6 +89,10 @@
         <form:input path="mobile" id="mobile" type="number"/><br/>
         <form:errors path="mobile"/><br/>
 
+        <label for="mediator_name">Mediator Name:</label>
+        <form:input path="mediator_name" id="mediator_name"/><br/>
+        <form:errors path="mediator_name"/><br/>
+
         <input type="submit" value="Register"/>
     </form:form>
 

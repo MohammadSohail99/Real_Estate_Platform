@@ -67,6 +67,7 @@
             <td>
                         <form action="/viewPropertiesBySeller">
                             <input type="hidden" name="sellerId" value="${seller.sid}">
+                            <input type="hidden" name="mid" value="${mid}">
                             <input type="submit" value="View Properties">
                         </form>
             </td>
@@ -74,6 +75,14 @@
     </c:forEach>
     </tbody>
 </table>
+<br>
+<br>
+<form action="/viewAppointments">
+    <input type="hidden" name="mid" value="${mid}">
+    <input class="action-button" type="submit" value="view All Bookings">
+</form>
+<br>
+<br>
 <form action="/">
     <input type="submit" value="Home Page">
 </form>

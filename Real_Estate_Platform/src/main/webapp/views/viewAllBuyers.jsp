@@ -24,6 +24,7 @@
     <h2>Total Price: ${total}</h2>
 
     <form action="/viewAllSeller">
+        <input type="hidden" name="mid" value="${mid}">
         <input type="submit" value="Back">
     </form>
 </body>

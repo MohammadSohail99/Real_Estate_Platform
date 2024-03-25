@@ -28,6 +28,30 @@
         tr:hover {
             background-color: #f5f5f5;
         }
+        .confirm-button {
+            padding: 5px 10px;
+            background-color: #28a745; /* Green button color */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .confirm-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        .reject-button {
+            padding: 5px 10px;
+            background-color: #dc3545; /* Red button color */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .reject-button:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+        .disabled-button {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -36,9 +60,9 @@
         <thead>
             <tr>
                 <th>Appointment ID</th>
-                <th>Mediator ID</th>
-                <th>Buyer ID</th>
-                <th>Property ID</th>
+                <th>Mediator Name</th>
+                <th>Buyer Name</th>
+                <th>Property Title</th>
                 <th>Date</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -48,34 +72,41 @@
             <%
                 List<Appointment> appointments = (List<Appointment>) request.getAttribute("appointments");
                 for (Appointment appointment : appointments) {
+                    String confirmButtonClass = "confirm-button";
+                    String rejectButtonClass = "reject-button";
+                    String actionMessage = "";
+                    if (appointment.getStatus().equals("Confirmed")) {
+                        actionMessage = "Buy";
+                    } else {
+                        confirmButtonClass += " disabled-button";
+                        rejectButtonClass += " disabled-button";
+                        if (appointment.getStatus().equals("Pending") || appointment.getStatus().equals("Rejected")) {
+                            actionMessage = "Cannot Buy";
+                        }
+                    }
             %>
                 <tr>
                     <td><%= appointment.getId() %></td>
-                    <td><%= appointment.getMediatorId() %></td>
-                    <td><%= appointment.getBuyerId() %></td>
-                    <td><%= appointment.getPropertyId() %></td>
+                    <td><%= appointment.getMediator_name() %></td>
+                    <td><%= appointment.getBuyer_name() %></td>
+                    <td><%= appointment.getTitle() %></td>
                     <td><%= appointment.getDate() %></td>
                     <td><%= appointment.getStatus() %></td>
                     <td>
+                        <% if (actionMessage.equals("Buy")) { %>
                             <form action="/buy" method="post">
-                                <input type="hidden" name="bid" value="${bid}">
-                                <input type="hidden" name="id" value="${id}">
-                                <input type="hidden" name="address" value="${address}">
-                                <input type="hidden" name="minPrice" value="${minPrice}">
-                                <input type="hidden" name="maxPrice" value="${maxPrice}">
-                                <input type="hidden" name="minArea" value="${minArea}">
-                                <input type="hidden" name="maxArea" value="${maxArea}">
-                                <input type="submit" value="Buy">
+                                <input type="hidden" name="pid" value="${pid}">
+                                <input type="hidden" name="buyer_name" value="<%= appointment.getBuyer_name() %>">
+                                <input type="hidden" name="title" value="<%= appointment.getTitle() %>">
+                                <input type="hidden" name="mediator_name" value="<%= appointment.getMediator_name() %>">
+                                <input type="submit" class="<%= confirmButtonClass %>" value="<%= actionMessage %>">
                             </form>
-
-                        <c:if test="${appointment.getStatus().equals('Rejected')}">
-                            <button disabled>Buy</button>
-                        </c:if>
+                        <% } else { %>
+                            <%= actionMessage %>
+                        <% } %>
                     </td>
                 </tr>
-            <%
-                }
-            %>
+            <% } %>
         </tbody>
     </table>
 </body>

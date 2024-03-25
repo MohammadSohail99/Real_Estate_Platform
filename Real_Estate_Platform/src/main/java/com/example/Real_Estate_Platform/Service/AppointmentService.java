@@ -1,7 +1,9 @@
 package com.example.Real_Estate_Platform.Service;
 
 import com.example.Real_Estate_Platform.Entity.Appointment;
+import com.example.Real_Estate_Platform.Entity.Mediator;
 import com.example.Real_Estate_Platform.Repository.AppointmentRepo;
+import com.example.Real_Estate_Platform.Repository.MediatorRepo;
 import com.example.Real_Estate_Platform.ServiceImplementation.AppointmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +17,18 @@ public class AppointmentService implements AppointmentServiceImpl {
 
     @Autowired
     private AppointmentRepo appointmentRepo;
+    @Autowired
+    private MediatorRepo mediatorRepo;
 
     @Override
-    public Appointment scheduleAppointment(int mediatorId, int buyerId, int propertyId, LocalDate date) {
+    public Appointment scheduleAppointment(String mediator_name, String buyer_name, String title, LocalDate date) {
         if (appointmentRepo.existsByDate(date)) {
             throw new IllegalArgumentException("Appointment slot is already booked for this property on the selected date");
         }
         Appointment appointment = new Appointment();
-        appointment.setMediatorId(mediatorId);
-        appointment.setBuyerId(buyerId);
-        appointment.setPropertyId(propertyId);
+        appointment.setMediator_name(mediator_name);
+        appointment.setBuyer_name(buyer_name);
+        appointment.setTitle(title);
         appointment.setDate(date);
         appointment.setStatus("pending");
         appointmentRepo.save(appointment);
@@ -32,8 +36,9 @@ public class AppointmentService implements AppointmentServiceImpl {
     }
 
     @Override
-    public List<Appointment> getAllAppointments() {
-        return appointmentRepo.findAll();
+    public List<Appointment> getAllAppointments(int mid) {
+        Mediator mediator=mediatorRepo.getReferenceById(mid);
+        return appointmentRepo.findAll().stream().filter(appointment -> appointment.getMediator_name().equalsIgnoreCase(mediator.getMname())).collect(Collectors.toList());
     }
     @Override
     public void confirmAppointment(int appointmentId) {
@@ -51,10 +56,10 @@ public class AppointmentService implements AppointmentServiceImpl {
     }
 
     @Override
-    public List<Appointment> getAppointmentsByBuyerId(int bid) {
+    public List<Appointment> getAppointmentsByBuyerName(String buyer_name) {
         return appointmentRepo.findAll()
                 .stream()
-                .filter(appointment -> appointment.getBuyerId() == bid)
+                .filter(appointment -> appointment.getBuyer_name().equalsIgnoreCase(buyer_name) )
                 .collect(Collectors.toList());
     }
 }

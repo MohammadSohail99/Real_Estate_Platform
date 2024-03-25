@@ -59,9 +59,9 @@
 </head>
 <body>
     <h1>Add Your Review</h1>
-    <form action="submitReview" method="post">
-        <input type="hidden" name="propertyId" value="${propertyId}">
-        <input type="hidden" name="buyerId" value="${buyerId}">
+    <form action="/submitReview" method="post">
+        <input type="hidden" name="pid" value="${pid}">
+        <input type="hidden" name="buyer_name" value="${buyer_name}">
         <label for="reviewText">Review Text:</label><br>
         <textarea id="reviewText" name="reviewText" rows="4" cols="50"></textarea><br>
         <label for="rating">Rating:</label><br>

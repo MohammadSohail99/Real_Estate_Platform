@@ -68,9 +68,6 @@
 <body>
     <h1>Mediator Registration Form</h1>
     <form:form action="register" modelAttribute="mediator" >
-        <label for="mid">Mediator Id:</label>
-        <form:input path="mid"/><br/>
-        <form:errors path="mid"/><br/>
 
         <label for="mname">Mediator Name:</label>
         <form:input path="mname"/><br/>

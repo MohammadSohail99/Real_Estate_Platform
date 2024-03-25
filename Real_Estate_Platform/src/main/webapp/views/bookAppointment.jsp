@@ -55,30 +55,20 @@
 <div class="container">
     <p>${errorMessage}</p>
     <form action="/scheduleAppointment">
-        <input type="hidden" name="propertyId" value="${propertyId}">
-         <input type="hidden" name="mediatorId" value="${mediatorId}">
-                <input type="hidden" name="buyerId" value="${buyerId}">
-                <input type="hidden" name="address" value="${address}">
-                <input type="hidden" name="minPrice" value="${minPrice}">
-                <input type="hidden" name="maxPrice" value="${maxPrice}">
-                <input type="hidden" name="minArea" value="${minArea}">
-                <input type="hidden" name="maxArea" value="${maxArea}">
+        <input type="hidden" name="pid" value="${pid}">
+        <input type="hidden" name="title" value="${title}">
+         <input type="hidden" name="mediator_name" value="${mediator_name}">
+                <input type="hidden" name="buyer_name" value="${buyer_name}">
         <input class="action-button" type="submit" value="Back">
     </form>
 </div>
 <div class="container">
     <h1>Schedule Appointment</h1>
     <form action="/scheduleAppointmentBuyer" method="post">
-        <input type="hidden" name="propertyId" value="${propertyId}">
-        <input type="hidden" name="buyerId" value="${buyerId}">
-        <input type="hidden" name="address" value="${address}">
-        <input type="hidden" name="minPrice" value="${minPrice}">
-        <input type="hidden" name="maxPrice" value="${maxPrice}">
-        <input type="hidden" name="minArea" value="${minArea}">
-        <input type="hidden" name="maxArea" value="${maxArea}">
-        Mediator ID: <input type="text" name="mediatorId"><br>
-        Buyer ID: <input type="text" name="bid" value="${buyerId}"><br>
-        Property ID: <input type="text" name="id" value="${propertyId}"><br>
+        <input type="hidden" name="pid" value="${pid}">
+        Mediator Name: <input type="text" name="mediator_name" value="${mediator_name}"><br>
+        Buyer Name: <input type="text" name="buyer_name" value="${buyer_name}"><br>
+        Property Title: <input type="text" name="title" value="${title}"><br>
         Date: <input type="date" name="date"><br>
         <input type="submit" value="Schedule Appointment">
     </form>

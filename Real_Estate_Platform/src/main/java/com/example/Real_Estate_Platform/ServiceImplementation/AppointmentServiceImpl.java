@@ -7,15 +7,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AppointmentServiceImpl {
+    Appointment scheduleAppointment(String mediator_name, String buyer_name, String title, LocalDate date);
 
-    Appointment scheduleAppointment(int mediatorId, int buyerId, int propertyId, LocalDate date);
-
-    List<Appointment> getAllAppointments();
+    List<Appointment> getAllAppointments(int mid);
 
     void confirmAppointment(int appointmentId);
 
     void rejectAppointment(int appointmentId);
 
-    List<Appointment> getAppointmentsByBuyerId(int bid);
+    List<Appointment> getAppointmentsByBuyerName(String buyer_name);
 }
 

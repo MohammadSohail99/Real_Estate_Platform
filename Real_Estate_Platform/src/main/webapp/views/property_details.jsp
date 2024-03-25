@@ -47,7 +47,7 @@
 </head>
 <body>
     <h1>Purchase Details for your purchase!</h1>
-    <input type="hidden" name="bid" value="${bid}">
+    <input type="hidden" name="buyer" value="${buyer}">
 
     <c:if test="${buyer != null}">
         <h2>Buyer Information:</h2>
@@ -70,8 +70,8 @@
     <p>${totalPrice}</p>
 
     <form action="addReview">
-        <input type="hidden" name="propertyId" value="${property.id}">
-        <input type="hidden" name="buyerId" value="${buyer.bid}">
+        <input type="hidden" name="pid" value="${pid}">
+        <input type="hidden" name="buyer_name" value="${buyer_name}">
         <input type="submit" value="Add Review">
     </form>
 </body>

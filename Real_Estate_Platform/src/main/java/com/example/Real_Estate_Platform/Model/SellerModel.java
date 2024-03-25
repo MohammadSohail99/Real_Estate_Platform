@@ -22,7 +22,8 @@ public class SellerModel {
     private String password;
     private String email;
     private Long mobile;
-    private Mediator mediator;
     private String role;
+    private String mediator_name;
     List<Property> propertyList=new ArrayList<>();
+    private Mediator mediator;
 }

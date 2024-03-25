@@ -73,6 +73,7 @@
                     <c:choose>
                         <c:when test="${property.sold}">
                             <form action="/viewBuyer">
+                                <input type="hidden" name="mid" value="${mid}">
                                 <input type="hidden" name="propertyId" value="${property.id}">
                                 <input class="action-button" type="submit" value="View Buyer">
                             </form>
@@ -91,10 +92,8 @@
     <p>No properties found for this seller.</p>
 </c:if>
 <form action="/viewAllSeller">
-    <input class="action-button" type="submit" value="Back to All Sellers">
-</form>
-<form action="/viewAppointments">
-    <input class="action-button" type="submit" value="view All Bookings">
+    <input type="hidden" name="mid" value="${mid}">
+    <input class="action-button" type="submit" value="All Sellers">
 </form>
 </body>
 </html>

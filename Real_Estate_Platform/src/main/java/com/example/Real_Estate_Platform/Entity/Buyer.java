@@ -1,10 +1,13 @@
 package com.example.Real_Estate_Platform.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,9 +27,9 @@ public class Buyer {
     private String email;
     private String role;
 
-    @ManyToOne
-    @JoinColumn(name = "mediator_id")
-    private Mediator mediator;
+    @ManyToMany(mappedBy = "buyerList")
+    @JsonIgnore
+    private List<Mediator> mediatorList = new ArrayList<>();
 
     @OneToMany(mappedBy = "buyer")
     private List<Property> propertyList;

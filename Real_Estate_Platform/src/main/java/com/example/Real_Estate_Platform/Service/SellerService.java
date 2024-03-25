@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SellerService implements SellerServiceImpl {
@@ -30,15 +31,22 @@ public class SellerService implements SellerServiceImpl {
     @Autowired
     private Conversion conversion;
     @Override
-    public Seller registerSeller(SellerModel sellerModel) {
+    public Seller registerSeller(SellerModel sellerModel, String username) {
         if (sellerRepo.findByUsername(sellerModel.getUsername()).isPresent()) {
             throw new RuntimeException("Username already exists");
         }
-        Seller seller=conversion.sellerModel_entity(sellerModel);
-        Mediator mediator=mediatorRepo.getReferenceById(1);
+
+        Seller seller = conversion.sellerModel_entity(sellerModel);
+        Mediator mediator = mediatorRepo.findAll()
+                .stream()
+                .filter(m -> m.getMname().equals(username))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Mediator not found for username: " + username));
+
         seller.setMediator(mediator);
-        return sellerRepo.save(seller) ;
+        return sellerRepo.save(seller);
     }
+
     @Override
     public SellerModel loginSeller(String username, String password) {
         Seller seller = sellerRepo.findByUsername(username).get();
@@ -48,8 +56,8 @@ public class SellerService implements SellerServiceImpl {
         return null;
     }
     @Override
-    public List<Seller> getAllSellers() {
-        return sellerRepo.findAll();
+    public List<Seller> getAllSellers(int mid) {
+        return sellerRepo.findAll().stream().filter(seller -> seller.getMediator().getMid()==mid).collect(Collectors.toList());
     }
     public Seller getSellerById(int sellerId) {
         Optional<Seller> sellerOptional = sellerRepo.findById(sellerId);

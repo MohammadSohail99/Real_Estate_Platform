@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Mediator {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int mid;
     private String mname;
     private String username;
@@ -29,8 +30,13 @@ public class Mediator {
     @JsonIgnore
     List<Seller> sellerList=new ArrayList<>();
 
-    @OneToMany(mappedBy = "mediator",cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<Buyer> buyerList=new ArrayList<>();
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "mediator_buyer",
+            joinColumns = { @JoinColumn(name = "mediator_id") },
+            inverseJoinColumns = { @JoinColumn(name = "buyer_id") }
+    )
+    private List<Buyer> buyerList = new ArrayList<>();
+
 
 }

@@ -15,21 +15,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AppointmentModel {
     private int id;
-    private int mediatorId;
-    private int buyerId;
-    private int propertyId;
-    private LocalDate date;
-    private String status="Pending";
+    private String Mediator_name;
 
-    @Override
-    public String toString() {
-        return "AppointmentModel{" +
-                "id=" + id +
-                ", mediatorId=" + mediatorId +
-                ", buyerId=" + buyerId +
-                ", propertyId=" + propertyId +
-                ", date=" + date +
-                ", status='" + status + '\'' +
-                '}';
-    }
+    private String Buyer_name;
+
+    private String title;
+
+    private LocalDate date;
+
+    private String status="Pending";
 }

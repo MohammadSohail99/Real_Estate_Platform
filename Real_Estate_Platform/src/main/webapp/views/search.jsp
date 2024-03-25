@@ -57,7 +57,8 @@
 <body>
     <h1>Search Properties</h1>
     <form action="/search" method="get">
-        <input type="hidden" id="bid" name="bid" value="${bid}"><br>
+        <input type="hidden" id="buyer_name" name="buyer_name" value="${buyer_name}"><br>
+        <input type="hidden" id="property" name="property" value="${property}"><br>
         <label for="address">Location:</label>
         <input type="text" id="address" name="address" required><br>
         <label for="minPrice">Minimum Price:</label>

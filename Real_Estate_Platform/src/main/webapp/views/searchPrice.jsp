@@ -57,7 +57,7 @@
 <body>
     <h1>Search Properties</h1>
     <form action="/searchPrice" method="get">
-        <input type="hidden" id="bid" name="bid" value="${bid}"><br>
+        <input type="hidden" id="buyer_name" name="buyer_name" value="${buyer_name}"><br>
         <label for="minPrice">Minimum Price:</label>
         <input type="number" id="minPrice" name="minPrice" required><br>
         <label for="maxPrice">Maximum Price:</label>

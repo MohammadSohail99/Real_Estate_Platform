@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -22,5 +25,5 @@ public class BuyerModel {
     private Long mobile;
     private String email;
     private String role;
-    private Mediator mediator;
+    private List<Mediator> mediatorList=new ArrayList<>();
 }

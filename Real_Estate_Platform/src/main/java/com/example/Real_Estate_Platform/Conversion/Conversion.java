@@ -17,7 +17,7 @@ public class Conversion {
         buyerModel.setMobile(buyer.getMobile());
         buyerModel.setEmail(buyer.getEmail());
         buyerModel.setAddress(buyer.getAddress());
-        buyerModel.setMediator(buyer.getMediator());
+        buyerModel.setMediatorList(buyer.getMediatorList());
         buyerModel.setUsername(buyer.getUsername());
         buyerModel.setPassword(buyer.getPassword());
         buyerModel.setRole("ROLE_BUYER");
@@ -31,7 +31,7 @@ public class Conversion {
         buyer.setMobile(buyerModel.getMobile());
         buyer.setEmail(buyerModel.getEmail());
         buyer.setAddress(buyerModel.getAddress());
-        buyer.setMediator(buyerModel.getMediator());
+        buyer.setMediatorList(buyerModel.getMediatorList());
         buyer.setPassword(passwordEncoder.encode(buyerModel.getPassword()));
         buyer.setUsername(buyerModel.getUsername());
         buyer.setRole("ROLE_BUYER");
@@ -118,9 +118,9 @@ public class Conversion {
     public AppointmentModel entityToModel(Appointment appointment) {
         AppointmentModel model = new AppointmentModel();
         model.setId(appointment.getId());
-        model.setBuyerId(appointment.getBuyerId());
-        model.setPropertyId(appointment.getPropertyId());
-        model.setMediatorId(appointment.getMediatorId());
+        model.setBuyer_name(appointment.getBuyer_name());
+        model.setTitle(appointment.getTitle());
+        model.setMediator_name(appointment.getMediator_name());
         model.setDate(appointment.getDate());
         model.setStatus(appointment.getStatus());
         return model;
@@ -129,9 +129,9 @@ public class Conversion {
     public Appointment modelToEntity(AppointmentModel model) {
         Appointment appointment = new Appointment();
         appointment.setId(model.getId());
-        appointment.setBuyerId(model.getBuyerId());
-        appointment.setPropertyId(model.getPropertyId());
-        appointment.setMediatorId(model.getMediatorId());
+        appointment.setBuyer_name(model.getBuyer_name());
+        appointment.setTitle(model.getTitle());
+        appointment.setMediator_name(model.getMediator_name());
         appointment.setDate(model.getDate());
         appointment.setStatus(model.getStatus());
         return appointment;

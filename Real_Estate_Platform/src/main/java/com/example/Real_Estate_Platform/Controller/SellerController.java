@@ -39,10 +39,11 @@ public class SellerController {
         return "sellerRegisterForm";
     }
     @RequestMapping("/registerSellers")
-    public String registerSeller(@Valid @ModelAttribute("seller") SellerModel sellerModel, BindingResult bindingResult) {
+    public String registerSeller(@Valid @ModelAttribute("seller") SellerModel sellerModel,@RequestParam("mediator_name") String name, BindingResult bindingResult,Model model) {
         validationSeller.validate(sellerModel,bindingResult);
+        model.addAttribute("mediator_name",name);
         if(bindingResult.hasErrors()) return "sellerRegisterForm";
-        sellerService.registerSeller(sellerModel);
+        sellerService.registerSeller(sellerModel,name);
         return "redirect:/logins";
     }
 

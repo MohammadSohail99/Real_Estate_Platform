@@ -21,25 +21,13 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int mediatorId;
+    private String Mediator_name;
 
-    private int buyerId;
+    private String Buyer_name;
 
-    private int propertyId;
+    private String title;
 
     private LocalDate date;
 
     private String status="Pending";
-
-    @Override
-    public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", mediatorId=" + mediatorId +
-                ", buyerId=" + buyerId +
-                ", propertyId=" + propertyId +
-                ", date=" + date +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }

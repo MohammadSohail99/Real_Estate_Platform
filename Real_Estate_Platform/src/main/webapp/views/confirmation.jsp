@@ -59,20 +59,17 @@
     <h1>Appointment Scheduled Successfully</h1>
     <p>Appointment Details:</p>
     <p>ID: ${appointment.id}</p>
-    <p>Mediator ID: ${appointment.mediatorId}</p>
-    <p>Buyer ID: ${appointment.buyerId}</p>
-    <p>Property ID: ${appointment.propertyId}</p>
-    <p>Date and Time: ${appointment.date}</p>
+    <p>Mediator Name: ${appointment.mediator_name}</p>
+    <p>Buyer Name: ${appointment.buyer_name}</p>
+    <p>Property Title: ${appointment.title}</p>
+    <p>Date: ${appointment.date}</p>
     <p>Status: ${appointment.status}</p>
 
     <form action="/viewBookings">
-        <input type="hidden" name="bid" value="${appointment.buyerId}">
-        <input type="hidden" name="id" value="${appointment.propertyId}">
-        <input type="hidden" name="address" value="${address}">
-        <input type="hidden" name="minPrice" value="${minPrice}">
-        <input type="hidden" name="maxPrice" value="${maxPrice}">
-        <input type="hidden" name="minArea" value="${minArea}">
-        <input type="hidden" name="maxArea" value="${maxArea}">
+        <input type="hidden" name="pid" value="${pid}">
+        <input type="hidden" name="buyer_name" value="${appointment.buyer_name}">
+        <input type="hidden" name="mediator_name" value="${appointment.mediator_name}">
+        <input type="hidden" name="title" value="${appointment.title}">
         <input type="submit" value="view All Bookings">
     </form>
 </div>

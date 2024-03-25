@@ -26,8 +26,6 @@ public class PropertyService implements PropertyServiceImpl {
     private BuyerRepo buyerRepo;
     @Autowired
     private Conversion conversion;
-
-
     @Override
     public String saveProperty(PropertyModel propertyModel,int sid){
         if(propertyModel==null){
@@ -53,7 +51,6 @@ public class PropertyService implements PropertyServiceImpl {
         });
         return propertyModelList;
     }
-
     @Override
     public Property getPropertyById(int id) {
         Property property = propertyRepo.findAll().stream()
@@ -80,14 +77,14 @@ public class PropertyService implements PropertyServiceImpl {
         propertyRepo.deleteById(id);
     }
     @Override
-    public double calculateTotalPriceForArea(double area, double price, int id, int bid) {
+    public double calculateTotalPriceForArea(int id, String buyer_name) {
         Property property=propertyRepo.getReferenceById(id);
         property.setSold(true);
         property.setStatus("Sold");
-        Buyer buyer=buyerRepo.getReferenceById(bid);
+        Buyer buyer=buyerRepo.findAll().stream().filter(buyer1 -> buyer1.getBname().equalsIgnoreCase(buyer_name)).findFirst().get();
         property.setBuyer(buyer);
         propertyRepo.save(property);
-        double totalPrice = area * price;
+        double totalPrice = property.getArea() * property.getPrice();
         return totalPrice;
     }
     @Override

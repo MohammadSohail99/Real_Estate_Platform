@@ -22,6 +22,7 @@ public class Seller {
     private String email;
     private Long mobile;
     private String role;
+    private String mediator_name;
 
     @OneToMany(mappedBy = "seller" ,cascade = CascadeType.ALL)
     @JsonIgnore

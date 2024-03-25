@@ -12,8 +12,10 @@ import com.example.Real_Estate_Platform.Service.PropertyService;
 import com.example.Real_Estate_Platform.Service.SellerService;
 import com.example.Real_Estate_Platform.ServiceImplementation.*;
 import com.example.Real_Estate_Platform.validation.ValidationMediator;
+import com.oracle.wls.shaded.org.apache.xpath.operations.Mod;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,52 +68,58 @@ public class MediatorController {
             MediatorModel mediatorModel = mediatorService.loginMediator(username, password);
             if (mediatorModel != null) {
                 model.addAttribute("mediator", mediatorModel);
-                model.addAttribute("mid",mediatorModel.getMid());
-                return "redirect:/viewAllSeller";
+                model.addAttribute("username",mediatorModel.getUsername());
+                return "redirect:/viewAllSeller?mid="+mediatorModel.getMid();
             } else {
                 model.addAttribute("loginFailed", true);
                 return "notaccept";
             }
         }
     @RequestMapping("/viewAllSeller")
-    public String getAllSellers(Model model) {
-        List<Seller> sellers= sellerService.getAllSellers();
+    public String getAllSellers(@RequestParam("mid") int mid, Model model) {
+        List<Seller> sellers= sellerService.getAllSellers(mid);
         model.addAttribute("sellers", sellers);
+        model.addAttribute("mid",mid);
         return "viewAllSellers";
     }
     @RequestMapping("/viewBuyer")
-    public String viewBuyerInfo(@RequestParam("propertyId") int propertyId, Model model) {
+    public String viewBuyerInfo(@RequestParam("mid")int mid,@RequestParam("propertyId") int propertyId, Model model) {
         Property property = propertyService.getPropertyById(propertyId);
         Buyer buyer = property.getBuyer();
         model.addAttribute("buyer", buyer);
         model.addAttribute("property",property);
+        model.addAttribute("mid",mid);
         double total=propertyService.calculate(property.getArea(),property.getPrice(),propertyId);
         model.addAttribute("total",total);
         return "viewAllBuyers";
     }
     @GetMapping("/viewPropertiesBySeller")
-    public String viewPropertiesBySeller(@RequestParam("sellerId") int sellerId, Model model) {
+    public String viewPropertiesBySeller(@RequestParam("sellerId") int sellerId,@RequestParam("mid") int mid, Model model) {
         List<Property> properties = propertyService.getPropertiesBySellerId(sellerId);
         model.addAttribute("properties", properties);
+        model.addAttribute("mid",mid);
         return "viewPropertySeller";
     }
     @RequestMapping("viewAppointments")
-    public String viewAllAppointments(Model model){
-        List<Appointment> appointmentList=appointmentService.getAllAppointments();
+    public String viewAllAppointments(@RequestParam("mid")int mid, Model model){
+        List<Appointment> appointmentList=appointmentService.getAllAppointments(mid);
         model.addAttribute("appointments",appointmentList);
+        model.addAttribute("mid",mid);
         System.out.println(appointmentList);
         return "viewAllAppointments";
     }
     @RequestMapping("/confirmAppointment")
-    public String confirmAppointment(@RequestParam("appointmentId") int appointmentId) {
+    public String confirmAppointment(@RequestParam("mid")int mid,@RequestParam("appointmentId") int appointmentId,Model model) {
         appointmentService.confirmAppointment(appointmentId);
-        return "redirect:/viewAllAppointments";
+        model.addAttribute("mid",mid);
+        return "redirect:/viewAppointments?mid="+mid;
     }
 
     @RequestMapping("/rejectAppointment")
-    public String rejectAppointment(@RequestParam("appointmentId") int appointmentId) {
+    public String rejectAppointment(@RequestParam("mid")int mid,@RequestParam("appointmentId") int appointmentId, Model model) {
         appointmentService.rejectAppointment(appointmentId);
-        return "redirect:/viewAllAppointments";
+        model.addAttribute("mid",mid);
+        return "redirect:/viewAppointments?mid="+mid;
     }
 
 }

@@ -12,4 +12,8 @@ public interface MediatorServiceImpl {
     MediatorModel loginMediator(String username, String password);
 
     List<MediatorModel> getAllMediators();
+
+    List<Mediator> getMediator(String mediatorName);
+
+    Mediator getMediatorByName(String mediatorName);
 }

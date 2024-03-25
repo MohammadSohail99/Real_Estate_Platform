@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class BuyerService implements BuyerServiceImpl {
     @Autowired
@@ -33,10 +36,7 @@ public class BuyerService implements BuyerServiceImpl {
             throw new RuntimeException("Username already exists");
         }
         Buyer buyer=conversion.buyerModel_entity(buyerModel);
-        Mediator mediator=mediatorRepo.getReferenceById(1);
-        buyer.setMediator(mediator);
         buyerRepo.save(buyer);
-
     }
     @Override
     public BuyerModel loginBuyer(String username, String password) {
@@ -48,7 +48,14 @@ public class BuyerService implements BuyerServiceImpl {
         return null;
     }
     @Override
-    public Buyer getBuyerById(int bid) {
-        return buyerRepo.getReferenceById(bid);
+    public Buyer getBuyerByName(String buyerName){
+        System.out.println(buyerName);
+        System.out.println(buyerRepo.findAll());
+        return buyerRepo.findAll().stream().filter(buyer -> buyer.getBname()
+                .equalsIgnoreCase(buyerName)).findFirst().get();
+    }
+    @Override
+    public List<Buyer> getBuyer(String buyerName){
+        return buyerRepo.findAll().stream().filter(buyer -> buyer.getBname().equalsIgnoreCase(buyerName)).collect(Collectors.toList());
     }
 }

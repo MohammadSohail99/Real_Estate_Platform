@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MediatorService implements MediatorServiceImpl {
@@ -54,5 +55,14 @@ public class MediatorService implements MediatorServiceImpl {
             mediatorModelList.add(conversion.entity_mediatorModel(mediator));
         });
         return mediatorModelList;
+    }
+    @Override
+    public List<Mediator> getMediator(String mediatorName){
+        return mediatorRepo.findAll().stream().filter(mediator -> mediator.getMname().
+                equalsIgnoreCase(mediatorName)).collect(Collectors.toList());
+    }
+    @Override
+    public Mediator getMediatorByName(String mediatorName){
+        return mediatorRepo.findAll().stream().filter(mediator -> mediator.getMname().equalsIgnoreCase(mediatorName)).findFirst().get();
     }
 }

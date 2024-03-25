@@ -29,24 +29,26 @@ public class ReviewController {
 
 
     @RequestMapping("/addReview")
-    public String addReview(@RequestParam("propertyId") int propertyId,
-                            @RequestParam("buyerId") int buyerId, Model model){
+    public String addReview(@RequestParam("pid") int propertyId,
+                            @RequestParam("buyer_name") String buyer_name, Model model){
         Property property =propertyService.getPropertyById(propertyId);
-        Buyer buyer = buyerService.getBuyerById(buyerId);
+        Buyer buyer = buyerService.getBuyerByName(buyer_name);
         ReviewModel reviewModel=new ReviewModel();
         model.addAttribute("reviewModel",reviewModel);
-        model.addAttribute("propertyId",propertyId);
-        model.addAttribute("buyerId",buyerId);
+        model.addAttribute("pid",propertyId);
+        model.addAttribute("buyer_name",buyer_name);
         return "addReviewForm";
     }
     @RequestMapping("/submitReview")
-    public String submitReview(@RequestParam("propertyId") int propertyId,
-                               @RequestParam("buyerId") int buyerId,
+    public String submitReview(@RequestParam("pid") int propertyId,
+                               @RequestParam("buyer_name") String buyer_name,
                                @RequestParam("reviewText") String reviewText,
                                @RequestParam("rating") int rating) {
         Property property =propertyService.getPropertyById(propertyId);
-        Buyer buyer = buyerService.getBuyerById(buyerId);
+        Buyer buyer = buyerService.getBuyerByName(buyer_name);
+        System.out.println(buyer);
         reviewService.addReview(property, buyer, reviewText, rating);
+        System.out.println(buyer);
         return "thankYouForReview";
     }
 

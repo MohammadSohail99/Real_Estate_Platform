@@ -72,7 +72,8 @@
             <th>Price</th>
             <th>Area</th>
             <th>Is Sold</th>
-              <th>Status</td>
+            <th>Status</td>
+            <th>Mediator</td>
         </tr>
 
         <c:forEach items="${propertyList}" var="property">
@@ -84,16 +85,14 @@
                 <td><c:out value="${property.area}" /> total sq ft</td>
                 <td><c:out value="${property.sold ? 'Yes' : 'No'}"/></td>
                 <td><c:out value="${property.status}"/></td>
+                <td><c:out value="${property.seller.getMediator().getMname()}"/></td>
                 <td>
                     <c:if test="${!property.sold}">
                         <form action="scheduleAppointment">
-                            <input type="hidden" name="propertyId" value="${property.id}">
-                            <input type="hidden" name="buyerId" value="${bid}">
-                            <input type="hidden" name="address" value="${property.address}">
-                            <input type="hidden" name="minPrice" value="${minPrice}">
-                            <input type="hidden" name="maxPrice" value="${maxPrice}">
-                            <input type="hidden" name="minArea" value="${minArea}">
-                            <input type="hidden" name="maxArea" value="${maxArea}">
+                            <input type="hidden" name="pid" value="${property.id}">
+                            <input type="hidden" name="title" value="${property.title}">
+                            <input type="hidden" name="buyer_name" value="${buyer_name}">
+                            <input type="hidden" name="mediator_name" value="${property.seller.getMediator().getMname()}">
                             <input type="submit" value="Book Appointment">
                         </form>
                     </c:if>

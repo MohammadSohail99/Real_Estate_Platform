@@ -20,6 +20,10 @@ public class ValidationSeller implements Validator {
         if (sellerModel.getUsername() == null || sellerModel.getUsername().isBlank()){
             ValidationUtils.rejectIfEmpty(errors,"username", "username");
         }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mediator_name", "NotEmpty");
+        if (sellerModel.getUsername() == null || sellerModel.getUsername().isBlank()){
+            ValidationUtils.rejectIfEmpty(errors,"mediator_name", "NotEmpty");
+        }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Password");
         if (sellerModel.getPassword() == null || sellerModel.getUsername().isEmpty() || sellerModel.getPassword().length()<6) {
             errors.rejectValue("password", "Password");

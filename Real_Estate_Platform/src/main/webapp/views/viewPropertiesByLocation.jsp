@@ -72,7 +72,8 @@
             <th>Price</th>
             <th>Area</th>
             <th>Is Sold</th>
-              <th>Status</td>
+            <th>Status</th>
+            <th>Mediator</th>
         </tr>
 
         <c:if test="${!empty propertyList}">
@@ -85,13 +86,26 @@
                     <td><c:out value="${property.area}"/></td>
                     <td><c:out value="${property.sold ? 'Yes' : 'No'}"/></td>
                     <td><c:out value="${property.status}"/></td>
+                    <td><c:out value="${property.seller.getMediator().getMname()}"/></td>
+                    <td>
+                        <c:if test="${!property.sold}">
+                            <form action="scheduleAppointment">
+                            <input type="hidden" name="pid" value="${property.id}">
+                            <input type="hidden" name="title" value="${property.title}">
+                            <input type="hidden" name="buyer_name" value="${buyer_name}">
+                            <input type="hidden" name="mediator_name" value="${property.seller.getMediator().getMname()}">
+                            <input type="submit" value="Book Appointment">
+                            </form>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
         </c:if>
-        <form action="/all">
-            <input type="hidden" name="bid" value="${bid}"/>
-             <input type="submit" value="Back">
-        </form>
     </table>
+
+    <form action="/all">
+        <input type="hidden" name="buyer_name" value="${buyer_name}">
+        <input type="submit" value="Back">
+    </form>
 </body>
 </html>

@@ -57,7 +57,7 @@
 <body>
     <h1>Search Properties</h1>
     <form action="/searchArea" method="get">
-        <input type="hidden" id="bid" name="bid" value="${bid}"><br>
+        <input type="hidden" id="buyer_name" name="buyer_name" value="${buyer_name}"><br>
         <label for="minArea">Minimum Area:</label>
         <input type="number" id="minArea" name="minArea" required><br>
         <label for="maxArea">Maximum Area:</label>
