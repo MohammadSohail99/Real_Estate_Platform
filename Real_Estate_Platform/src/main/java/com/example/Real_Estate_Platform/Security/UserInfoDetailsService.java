@@ -21,18 +21,17 @@ public class UserInfoDetailsService implements UserDetailsService {
     SellerRepo sellerRepo;
     @Autowired
     BuyerRepo buyerRepo;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (mediatorRepo.existsByUsername(username)) {
-            Mediator mediator = mediatorRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Mediator not found " + username));
-            return new MediatorInfo(mediator);
+            Optional<Mediator> mediator = mediatorRepo.findAll().stream().filter(user -> user.getUsername().equals(username)).findFirst();
+            return mediator.map(MediatorInfo::new).orElseThrow(() -> new UsernameNotFoundException("Mediator not found " + username));
         }
         if (sellerRepo.existsByUsername(username)) {
-            Seller seller = sellerRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Seller not found " + username));
-            return new SellerInfo(seller);
+            Optional<Seller> seller = sellerRepo.findAll().stream().filter(user->user.getUsername().equals(username)).findFirst();
+            return seller.map(SellerInfo::new).orElseThrow(() -> new UsernameNotFoundException("Seller not found " + username));
         }
-        Buyer buyer = buyerRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Buyer not found " + username));
-        return new BuyerInfo(buyer);
+        Optional<Buyer> buyer = buyerRepo.findAll().stream().filter(user->user.getUsername().equals(username)).findFirst();
+        return buyer.map(BuyerInfo::new).orElseThrow(() -> new UsernameNotFoundException("Buyer not found " + username));
     }
 }

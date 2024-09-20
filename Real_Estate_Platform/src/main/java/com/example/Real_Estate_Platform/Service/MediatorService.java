@@ -1,22 +1,28 @@
 package com.example.Real_Estate_Platform.Service;
 
-import com.example.Real_Estate_Platform.Conversion.Conversion;
+import com.example.Real_Estate_Platform.Entity.Buyer;
 import com.example.Real_Estate_Platform.Entity.Mediator;
+import com.example.Real_Estate_Platform.Entity.Property;
+import com.example.Real_Estate_Platform.Entity.Seller;
+import com.example.Real_Estate_Platform.Model.BuyerModel;
 import com.example.Real_Estate_Platform.Model.MediatorModel;
+import com.example.Real_Estate_Platform.Model.PropertyModel;
+import com.example.Real_Estate_Platform.Model.SellerModel;
+import com.example.Real_Estate_Platform.Repository.BuyerRepo;
 import com.example.Real_Estate_Platform.Repository.MediatorRepo;
 import com.example.Real_Estate_Platform.Repository.PropertyRepo;
 import com.example.Real_Estate_Platform.Repository.SellerRepo;
-import com.example.Real_Estate_Platform.ServiceImplementation.MediatorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class MediatorService implements MediatorServiceImpl {
+public class MediatorService {
     @Autowired
     private MediatorRepo mediatorRepo;
     @Autowired
@@ -26,43 +32,89 @@ public class MediatorService implements MediatorServiceImpl {
     @Autowired
     private PropertyRepo propertyRepo;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private BuyerRepo buyerRepo;
     @Autowired
-    private Conversion conversion;
-    @Override
-    public Mediator registerMediator(MediatorModel mediatorModel) {
-        if (mediatorRepo.existsByUsername(mediatorModel.getUsername())) {
-            throw new RuntimeException("Username already exists");
-        }
-        Mediator mediator=conversion.mediatorModel_entity(mediatorModel);
-        return mediatorRepo.save(mediator) ;
+    private BuyerService buyerService;
+
+    public MediatorModel add(MediatorModel mediatorModel) {
+        System.out.println("678");
+        Mediator mediator=mediatorModel_entity(mediatorModel);
+        return entity_mediatorModel(mediatorRepo.save(mediator));
     }
-    @Override
-    public MediatorModel loginMediator(String username, String password) {
-        Mediator mediator = mediatorRepo.findByUsername(username).get();
-        if (mediator != null && passwordEncoder.matches(password,mediator.getPassword())) {
-            return conversion.entity_mediatorModel(mediator);
+
+    private MediatorModel entity_mediatorModel(Mediator mediator) {
+        MediatorModel mediatorModel=new MediatorModel();
+        mediatorModel.setMid(mediator.getMid());
+        mediatorModel.setMobile(mediator.getMobile());
+        mediatorModel.setPassword(mediator.getPassword());
+        mediatorModel.setUsername(mediator.getUsername());
+        mediatorModel.setEmail(mediator.getEmail());
+        mediatorModel.setSellerList(mediator.getSellerList());
+        mediatorModel.setMname(mediator.getMname());
+        return mediatorModel;
+    }
+
+    private Mediator mediatorModel_entity(MediatorModel mediatorModel) {
+        Mediator mediator=new Mediator();
+        mediator.setMid(mediatorModel.getMid());
+        mediator.setMname(mediatorModel.getMname());
+        mediator.setPassword(mediatorModel.getPassword());
+        mediator.setMobile(mediatorModel.getMobile());
+        mediator.setUsername(mediatorModel.getUsername());
+        mediator.setMobile(mediatorModel.getMobile());
+        mediator.setSellerList(mediatorModel.getSellerList());
+        mediator.setEmail(mediatorModel.getEmail());
+        return mediator;
+    }
+
+    public String mediatorLogin(String username, String password) {
+        Mediator mediator=mediatorRepo.findByUsername(username);
+        if(mediator!=null && mediator.getPassword().equals(password)){
+            return "Login Successful";
+        }
+        return "Login Failed";
+    }
+
+    public List<SellerModel> getAllSellers() {
+        List<SellerModel> sellerModelList = sellerRepo.findAll().stream()
+                .map(sellerService::entity_sellerModel)
+                .collect(Collectors.toList());
+
+        return sellerModelList;
+    }
+
+    public List<BuyerModel> getAllBuyers() {
+        List<BuyerModel> buyerModelList = buyerRepo.findAll().stream()
+                .map(buyerService::entity_buyerModel)
+                .collect(Collectors.toList());
+
+        return buyerModelList;
+    }
+    public PropertyModel getPropertyInfo(int propertyId) {
+        Optional<Property> propertyOptional = propertyRepo.findById(propertyId);
+        if (propertyOptional.isPresent()) {
+            Property property = propertyOptional.get();
+            return sellerService.entity_propertyModel(property);
         }
         return null;
     }
 
-    @Override
-    public List<MediatorModel> getAllMediators(){
-        List<Mediator> mediatorList=mediatorRepo.findAll();
-        List<MediatorModel> mediatorModelList=new ArrayList<>();
+    public List<BuyerModel> getBuyersForProperty(int propertyId) {
+        Optional<Property> propertyOptional = propertyRepo.findById(propertyId);
+        if (propertyOptional.isPresent()) {
+            Property property = propertyOptional.get();
+            List<Buyer> buyers = (List<Buyer>) property.getBuyers();
+            List<BuyerModel> buyerModels = buyers.stream()
+                    .map(buyer -> buyerService.entity_buyerModel(buyer))
+                    .collect(Collectors.toList());
 
-        mediatorList.forEach(mediator -> {
-            mediatorModelList.add(conversion.entity_mediatorModel(mediator));
-        });
-        return mediatorModelList;
+            return buyerModels;
+        }
+        return Collections.emptyList();
     }
-    @Override
-    public List<Mediator> getMediator(String mediatorName){
-        return mediatorRepo.findAll().stream().filter(mediator -> mediator.getMname().
-                equalsIgnoreCase(mediatorName)).collect(Collectors.toList());
+    public List<Buyer> notifyMultipleBuyers(List<Buyer> buyers, Property property) {
+        return buyers;
     }
-    @Override
-    public Mediator getMediatorByName(String mediatorName){
-        return mediatorRepo.findAll().stream().filter(mediator -> mediator.getMname().equalsIgnoreCase(mediatorName)).findFirst().get();
-    }
+
+
 }

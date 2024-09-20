@@ -1,70 +1,35 @@
 package com.example.Real_Estate_Platform.Controller;
-import com.example.Real_Estate_Platform.Entity.Seller;
+
+import com.example.Real_Estate_Platform.Model.MediatorModel;
+import com.example.Real_Estate_Platform.Model.PropertyModel;
 import com.example.Real_Estate_Platform.Model.SellerModel;
-import com.example.Real_Estate_Platform.Service.BuyerService;
-import com.example.Real_Estate_Platform.Service.MediatorService;
-import com.example.Real_Estate_Platform.Service.PropertyService;
 import com.example.Real_Estate_Platform.Service.SellerService;
-import com.example.Real_Estate_Platform.ServiceImplementation.BuyerServiceImpl;
-import com.example.Real_Estate_Platform.ServiceImplementation.MediatorServiceImpl;
-import com.example.Real_Estate_Platform.ServiceImplementation.PropertyServiceImpl;
-import com.example.Real_Estate_Platform.ServiceImplementation.SellerServiceImpl;
-import com.example.Real_Estate_Platform.validation.ValidationSeller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-@Controller
+@RestController
 public class SellerController {
     @Autowired
-    private SellerServiceImpl sellerService;
-    @Autowired
-    private PropertyServiceImpl propertyService;
-    @Autowired
-    private BuyerServiceImpl buyerService;
-    @Autowired
-    private MediatorServiceImpl mediatorService;
-    @Autowired
-    ValidationSeller validationSeller;
-    @RequestMapping("/regSeller")
-    public String showRegisterForm(Model model) {
-        SellerModel sellerModel = new SellerModel();
-        model.addAttribute("seller", sellerModel);
-        return "sellerRegisterForm";
+    private SellerService sellerService;
+    @PostMapping("/registerSeller")
+    public SellerModel registerSeller(@RequestParam("mid")int mid,@RequestBody @Valid SellerModel sellerModel){
+        return sellerService.add(mid,sellerModel);
     }
-    @RequestMapping("/registerSellers")
-    public String registerSeller(@Valid @ModelAttribute("seller") SellerModel sellerModel,@RequestParam("mediator_name") String name, BindingResult bindingResult,Model model) {
-        validationSeller.validate(sellerModel,bindingResult);
-        model.addAttribute("mediator_name",name);
-        if(bindingResult.hasErrors()) return "sellerRegisterForm";
-        sellerService.registerSeller(sellerModel,name);
-        return "redirect:/logins";
+    @GetMapping("/sellerLogin")
+    public  String sellerLogin(@RequestParam("username")String username, @RequestParam("password")String password){
+        return sellerService.sellerLogin(username,password);
     }
-
-    @RequestMapping("/logins")
-    public String showLoginForm(Model model) {
-        SellerModel sellerModel = new SellerModel();
-        model.addAttribute("seller", sellerModel);
-        return "sellerLoginForm";
+    @PostMapping("/addProperty/{id}")
+    public PropertyModel addProperty(@PathVariable int id, @RequestBody PropertyModel propertyModel) {
+        return sellerService.addProperty(propertyModel, id);
     }
-
-    @RequestMapping("/loginSeller")
-    public String loginSeller(@RequestParam String username, @RequestParam String password, Model model) {
-        SellerModel sellerModel = sellerService.loginSeller(username, password);
-        if (sellerModel != null) {
-            model.addAttribute("seller", sellerModel);
-            model.addAttribute("sid", sellerModel.getSid());
-            return "redirect:/main?sid=" + sellerModel.getSid();
-        } else {
-            model.addAttribute("loginFailed", true);
-            return "notaccept";
-        }
+    @GetMapping("/allProperties/{id}")
+    public List<PropertyModel> allProperties(@PathVariable int id){
+        return (List<PropertyModel>) sellerService.getAllProperties(id);
     }
-
 }

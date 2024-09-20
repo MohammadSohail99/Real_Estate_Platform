@@ -1,8 +1,14 @@
 package com.example.Real_Estate_Platform.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +20,13 @@ import java.util.List;
 @AllArgsConstructor
 public class Seller {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sid;
     private String sname;
-    private String username;
-    private String password;
     private String email;
     private Long mobile;
+    private String username;
+    private  String password;
     private String role;
-    private String mediator_name;
 
     @OneToMany(mappedBy = "seller" ,cascade = CascadeType.ALL)
     @JsonIgnore
@@ -33,4 +37,16 @@ public class Seller {
     @JoinColumn(name = "mediator_id")
     private Mediator mediator;
 
+    @ManyToMany(mappedBy = "seller")
+    private List<Buyer> buyersToApprove = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Seller{" +
+                "sid=" + sid +
+                ", sname='" + sname + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile=" + mobile +
+                '}';
+    }
 }
